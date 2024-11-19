@@ -17,8 +17,9 @@ import { Iconify } from 'src/components/iconify';
 
 export type UserProps = {
   title: string;
-  imageUrl: string;
-  record: string;
+  longitude: string;
+  latitude: string;
+  distance:string
 };
 
 type UserTableRowProps = {
@@ -51,14 +52,14 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
           <Checkbox disableRipple checked={selected} onChange={onSelectRow} />
         </TableCell>
 
-
-
         <TableCell>{row.title}</TableCell>
 
-        <TableCell>{row.imageUrl}</TableCell>
+        <TableCell>{row.longitude}</TableCell>
+        <TableCell>{row.latitude}</TableCell>
+        <TableCell>{row.distance}</TableCell>
 
-        <TableCell align="center">{row.record}</TableCell>
-{/* 
+        {/* <TableCell align="center">{row.record}</TableCell> */}
+        {/* 
         <TableCell>
           <Label color={(row.status === 'banned' && 'error') || 'success'}>
             {row.status === 'approved' ? 'Approved' : 'Pending'}

@@ -13,30 +13,37 @@ export const navData = [
     path: '/',
     icon: icon('ic-analytics'),
   },
+
+
   {
-    title: 'User',
-    path: '/user',
-    icon: icon('ic-user'),
-  },
-  {
-    title: 'Product',
-    path: '/products',
+    title: 'Glossary',
+    path: '/glossary-main',
     icon: icon('ic-cart'),
     info: (
       <Label color="error" variant="inverted">
-        +3
+        +4
       </Label>
     ),
   },
   {
-    title: 'Blog',
-    path: '/blog',
-    icon: icon('ic-blog'),
+    title: 'Archive',
+    path: '/user',
+    icon: icon('ic-cart'),
+    info: (
+      <Label color="error" variant="inverted">
+        +1
+      </Label>
+    ),
   },
   {
-    title: 'Sign in',
-    path: '/sign-in',
-    icon: icon('ic-lock'),
+    title: 'Map',
+    path: '/map-list',
+    icon: icon('ic-cart'),
+    info: (
+      <Label color="error" variant="inverted">
+        +2
+      </Label>
+    ),
   },
   {
     title: 'Not found',

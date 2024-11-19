@@ -2,42 +2,23 @@
 import { useState, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-// Import Firebase functions
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-} from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+import { firebaseController } from '../../utils/firebaseMiddleware'; // Adjust the path as necessary
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: 'AIzaSyCjA3GI1FC6_wikAy6qMw8hk4ZXDPsgw1U',
-  authDomain: 'laajverd-42a3f.firebaseapp.com',
-  databaseURL: 'https://laajverd-42a3f-default-rtdb.firebaseio.com',
-  projectId: 'laajverd-42a3f',
-  storageBucket: 'laajverd-42a3f.firebasestorage.app',
-  messagingSenderId: '654657065769',
-  appId: '1:654657065769:web:9cff527bd2a4ec6a9f1d38',
-  measurementId: 'G-ZS0JV6362J',
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-// ----------------------------------------------------------------------
+// Define the type for glossary data
+interface GlossaryEntry {
+  title: string;
+  description: string;
+  id: string;
+}
 
 export function GlossaryForm() {
   const [title, setTitle] = useState(''); // State for title
   const [description, setDescription] = useState(''); // State for description
-  const [glossaryData, setGlossaryData] = useState([]); // State for fetched data
+  const [glossaryData, setGlossaryData] = useState<GlossaryEntry[]>([]); // State for fetched data
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,21 +28,17 @@ export function GlossaryForm() {
     }
 
     try {
-      const docData = { title, description };
-      const docRef = await addDoc(collection(db, 'archives'), docData);
-      console.log('Document written with ID:', docRef.id);
+      await firebaseController.addGlossaryEntry(title, description); // Use controller to add entry
       alert('Entry successfully added!');
       fetchGlossaryData(); // Fetch data after adding
     } catch (error) {
-      console.error('Error adding entry:', error);
       alert(`Error adding entry: ${error.message}`);
     }
   };
 
   const fetchGlossaryData = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'archives'));
-      const data = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })); // Include document ID
+      const data = await firebaseController.getGlossaryEntries(); // Use controller to fetch entries
       setGlossaryData(data); // Set fetched data to state
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -108,10 +85,7 @@ export function GlossaryForm() {
         Glossary Form
       </Typography>
       {renderArchiveForm}
-
-
       {/* Display fetched glossary data */}
-    
     </>
   );
 }

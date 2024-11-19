@@ -1,16 +1,17 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
+import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { useTheme } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
-import axios from 'axios';
 
 type FormEvent = React.FormEvent<HTMLFormElement>;
 
@@ -63,17 +64,19 @@ export default function RegisterView() {
         phoneNumber,
       };
 
-      axios.post('http://localhost:3000/api/auth/register', userData).then((response) => {
-        console.log('Registration successful:', response.data);
-        localStorage.setItem('token', response.data.token);
-        navigate('/')
-      }).catch((error) => {
-        setError(error);
-      });
-     
-    } catch (error) {
+      axios
+        .post('https://industrials-backend.vercel.app/api/auth/register', userData)
+        .then((response) => {
+          console.log('Registration successful:', response.data);
+          localStorage.setItem('token', response.data.token);
+          navigate('/');
+        })
+        .catch((err) => {
+          setError(err);
+        });
+    } catch (errors) {
       setError('An error occurred during registration');
-      console.error('Registration error:', error);
+      console.error('Registration error:', errors);
     } finally {
       setLoading(false);
     }

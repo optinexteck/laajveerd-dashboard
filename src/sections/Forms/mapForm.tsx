@@ -9,32 +9,34 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { firebaseController } from '../../utils/firebaseMiddleware'; // Adjust the path as necessary
 
 // Define the type for archive data
-interface ArchiveEntry {
+interface addMapEntry {
   title: string;
-  record: string;
-  imageUrl: string;
+  latitude: string;
+  longitude: string;
   id: string; // Assuming you have an ID for each entry
+  distance:string;
 }
 
 // ----------------------------------------------------------------------
 
-export function ArchiveForm() {
+export function MapForm() {
   const [title, setTitle] = useState(''); // State for title
-  const [record, setRecord] = useState(''); // State for record
-  const [imageUrl, setImageUrl] = useState(''); // State for imageUrl
+  const [latitude, setLatitude] = useState(''); // State for latitude
+  const [longitude, setLongitude] = useState(''); // State for longitude
+  const [distance,setDistance]=useState('')
   const [loading, setLoading] = useState(false); // Loading state
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!title || !record || !imageUrl) {
+    if (!title || !latitude || !longitude) {
       alert('Please fill in all fields');
       return;
     }
 
     setLoading(true); // Set loading state
     try {
-      const docData = { title, record, imageUrl };
-      await firebaseController.addArchiveEntry(docData); // Use controller to add entry
+      const docData = { title, latitude, longitude,distance };
+      await firebaseController.addMapEntry(docData); // Use controller to add entry
       alert('Entry successfully added!');
       fetchArchiveData(); // Fetch data after adding
     } catch (error) {
@@ -70,18 +72,26 @@ export function ArchiveForm() {
       />
       <TextField
         fullWidth
-        name="record"
-        label="Record"
-        value={record}
-        onChange={(e) => setRecord(e.target.value)}
+        name="latitude"
+        label="latitude"
+        value={latitude}
+        onChange={(e) => setLatitude(e.target.value)}
         sx={{ mb: 3 }}
       />
       <TextField
         fullWidth
-        name="imageUrl"
-        label="Image URL"
-        value={imageUrl}
-        onChange={(e) => setImageUrl(e.target.value)}
+        name="longitude"
+        label="longitude"
+        value={longitude}
+        onChange={(e) => setLongitude(e.target.value)}
+        sx={{ mb: 3 }}
+      />
+      <TextField
+        fullWidth
+        name="distance"
+        label="Distance"
+        value={distance}
+        onChange={(e) => setDistance(e.target.value)}
         sx={{ mb: 3 }}
       />
       <LoadingButton
@@ -100,7 +110,7 @@ export function ArchiveForm() {
   return (
     <>
       <Typography variant="h5" sx={{ mb: 3 }}>
-        Archive Form
+        Map Form
       </Typography>
       {renderArchiveForm}
     </>

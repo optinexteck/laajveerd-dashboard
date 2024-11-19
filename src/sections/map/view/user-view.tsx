@@ -38,7 +38,7 @@ export function UserView() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const entries = await firebaseController.getArchiveEntries(); // Fetch data from Firebase
+        const entries = await firebaseController.fetchMapEntries(); // Fetch data from Firebase
         setData(entries); // Set the fetched data
         console.log(entries);
       } catch (error) {
@@ -53,13 +53,13 @@ export function UserView() {
     <DashboardContent>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          Archive Data
+          map Data
         </Typography>
         <Button
           variant="contained"
           color="inherit"
           startIcon={<Iconify icon="mingcute:add-line" />}
-          href='/archive'
+          href="/map"
         >
           New user
         </Button>
@@ -92,8 +92,7 @@ export function UserView() {
                 }
                 headLabel={[
                   { id: 'title', label: 'Title' },
-                  { id: 'category', label: 'Category' },
-                  { id: 'records', label: 'Records', align: 'center' },
+                  { id: 'description', label: 'desciprtion' },
                   { id: 'Options' },
                 ]}
               />

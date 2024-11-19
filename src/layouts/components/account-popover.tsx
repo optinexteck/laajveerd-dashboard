@@ -1,6 +1,7 @@
 import type { IconButtonProps } from '@mui/material/IconButton';
 
 import { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -11,7 +12,6 @@ import MenuList from '@mui/material/MenuList';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
-import {useNavigate} from 'react-router-dom'
 
 import { useRouter, usePathname } from 'src/routes/hooks';
 
@@ -30,7 +30,7 @@ export type AccountPopoverProps = IconButtonProps & {
 
 export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps) {
   const router = useRouter();
-  const navigate =useNavigate();
+  const navigate = useNavigate();
 
   const pathname = usePathname();
 
@@ -51,11 +51,11 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
     },
     [handleClosePopover, router]
   );
-  const logout =()=>{
+  const logout = () => {
     console.log('logout');
     localStorage.removeItem('token');
     navigate('/sign-in');
-  }
+  };
   return (
     <>
       <IconButton

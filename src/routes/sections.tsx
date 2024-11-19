@@ -19,6 +19,11 @@ export const ProductsPage = lazy(() => import('src/pages/products'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 export const ArchiveForm = lazy(() => import('src/pages/archiveForm'));
 export const GlossaryForm = lazy(() => import('src/pages/glossaryForm'));
+export const GlossaryMain = lazy(() => import('src/pages/glossaryMain'));
+export const MapForm = lazy(() => import('src/pages/mapForm'));
+export const MapList = lazy(() => import('src/pages/map'));
+
+
 
 // ----------------------------------------------------------------------
 
@@ -37,7 +42,7 @@ const renderFallback = (
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const token = localStorage.getItem('token');
-  
+
   if (!token) {
     return <Navigate to="/sign-in" replace />;
   }
@@ -62,7 +67,33 @@ export function Router() {
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
+        { path: 'glossary-main', element: <GlossaryMain /> },
         { path: 'archive1', element: <ArchiveForm /> },
+        { path: 'map-list', element: <MapList /> },
+        {
+          path: 'archive',
+          element: (
+            <AuthLayout>
+              <ArchiveForm />
+            </AuthLayout>
+          ),
+        },
+        {
+          path: 'glossary',
+          element: (
+            <AuthLayout>
+              <GlossaryForm />
+            </AuthLayout>
+          ),
+        },
+        {
+          path: 'map',
+          element: (
+            <AuthLayout>
+              <MapForm />
+            </AuthLayout>
+          ),
+        },
       ],
     },
     {
@@ -78,22 +109,6 @@ export function Router() {
       element: (
         <AuthLayout>
           <RegisterPage />
-        </AuthLayout>
-      ),
-    },
-    {
-      path: 'archive',
-      element: (
-        <AuthLayout>
-          <ArchiveForm />
-        </AuthLayout>
-      ),
-    },
-    {
-      path: 'glossary',
-      element: (
-        <AuthLayout>
-          <GlossaryForm />
         </AuthLayout>
       ),
     },

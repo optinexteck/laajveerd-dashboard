@@ -1,6 +1,5 @@
-import axios from 'axios';
-import { useState, useCallback,useEffect } from 'react';
-
+import { firebaseController } from 'src/utils/firebaseMiddleware'; // Import the firebase controller
+import { useState, useEffect, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
@@ -9,64 +8,58 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-
-import { _users } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
-
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
-
 import { TableNoData } from '../table-no-data';
 import { UserTableRow } from '../user-table-row';
 import { UserTableHead } from '../user-table-head';
 import { TableEmptyRows } from '../table-empty-rows';
 import { UserTableToolbar } from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
-
 import type { UserProps } from '../user-table-row';
 
 // ----------------------------------------------------------------------
 
 export function UserView() {
   const table = useTable();
-  const [data,setData] = useState<UserProps[]>([]);
-
+  const [data, setData] = useState<UserProps[]>([]);
   const [filterName, setFilterName] = useState('');
 
   const dataFiltered: UserProps[] = applyFilter({
-    inputData: _users,
+    inputData: data, // Use the fetched data directly
     comparator: getComparator(table.order, table.orderBy),
     filterName,
   });
+  console.log(dataFiltered);
 
   const notFound = !dataFiltered.length && !!filterName;
 
-  useEffect(
-    ()=>{
-          const token = localStorage.getItem('token');
-      axios.get('http://localhost:3000/api/user/services',{
-        headers:{
-          Authorization: `Bearer ${token}`
-        }
-      }).then(
-        (res)=>{
-          setData(res.data);
-          console.log(data);
-        }
-      )
-    }
-  )
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const entries = await firebaseController.getGlossaryEntries(); // Fetch data from Firebase
+        setData(entries); // Set the fetched data
+        console.log(entries);
+      } catch (error) {
+        console.error('Error fetching data from Firebase:', error);
+      }
+    };
+
+    fetchData(); // Call the fetch function
+  }, []);
 
   return (
     <DashboardContent>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          Users
+          Glossary Data
         </Typography>
         <Button
           variant="contained"
           color="inherit"
           startIcon={<Iconify icon="mingcute:add-line" />}
+          href="/glossary"
         >
           New user
         </Button>
@@ -88,22 +81,19 @@ export function UserView() {
               <UserTableHead
                 order={table.order}
                 orderBy={table.orderBy}
-                rowCount={_users.length}
+                rowCount={data.length} // Use the length of the fetched data
                 numSelected={table.selected.length}
                 onSort={table.onSort}
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    _users.map((user) => user.id)
+                    data.map((user) => user.id) // Use the fetched data
                   )
                 }
                 headLabel={[
-                  { id: 'name', label: 'Name' },
-                  { id: 'company', label: 'Company' },
-                  { id: 'role', label: 'Role' },
-                  { id: 'isVerified', label: 'Verified', align: 'center' },
-                  { id: 'status', label: 'Status' },
-                  { id: '' },
+                  { id: 'title', label: 'Title' },
+                  { id: 'description', label: 'desciprtion' },
+                  { id: 'Options' },
                 ]}
               />
               <TableBody>
@@ -114,16 +104,16 @@ export function UserView() {
                   )
                   .map((row) => (
                     <UserTableRow
-                      key={row.id}
+                      key={row.title} // Ensure you have a unique key
                       row={row}
-                      selected={table.selected.includes(row.id)}
-                      onSelectRow={() => table.onSelectRow(row.id)}
+                      selected={table.selected.includes(row.title)} // Use row.imageUrl for selection
+                      onSelectRow={() => table.onSelectRow(row.title)} // Use row.imageUrl for selection
                     />
                   ))}
 
                 <TableEmptyRows
                   height={68}
-                  emptyRows={emptyRows(table.page, table.rowsPerPage, _users.length)}
+                  emptyRows={emptyRows(table.page, table.rowsPerPage, data.length)} // Use the length of the fetched data
                 />
 
                 {notFound && <TableNoData searchQuery={filterName} />}
@@ -135,7 +125,7 @@ export function UserView() {
         <TablePagination
           component="div"
           page={table.page}
-          count={_users.length}
+          count={data.length} // Use the length of the fetched data
           rowsPerPage={table.rowsPerPage}
           onPageChange={table.onChangePage}
           rowsPerPageOptions={[5, 10, 25]}
