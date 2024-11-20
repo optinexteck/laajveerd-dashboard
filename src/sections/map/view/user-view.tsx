@@ -23,7 +23,7 @@ import type { UserProps } from '../user-table-row';
 
 export function UserView() {
   const table = useTable();
-  const [data, setData] = useState<UserProps[]>([]);
+  const [data, setData] = useState<any[]>([]);
   const [filterName, setFilterName] = useState('');
 
   const dataFiltered: UserProps[] = applyFilter({
@@ -87,7 +87,7 @@ export function UserView() {
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    data.map((user) => user.id) // Use the fetched data
+                    data.map((user) => user.title) // Use the fetched data
                   )
                 }
                 headLabel={[

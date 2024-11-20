@@ -16,6 +16,8 @@ import { Iconify } from 'src/components/iconify';
 // ----------------------------------------------------------------------
 
 export type UserProps = {
+  id:string;
+  name:string;
   title: string;
   description: string;
 };

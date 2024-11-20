@@ -19,6 +19,7 @@ export type UserProps = {
   title: string;
   imageUrl: string;
   record: string;
+  name:string
 };
 
 type UserTableRowProps = {

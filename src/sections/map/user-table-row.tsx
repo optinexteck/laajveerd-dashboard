@@ -19,7 +19,8 @@ export type UserProps = {
   title: string;
   longitude: string;
   latitude: string;
-  distance:string
+  distance:string;
+  name:string
 };
 
 type UserTableRowProps = {

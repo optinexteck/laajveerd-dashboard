@@ -23,7 +23,7 @@ import type { UserProps } from '../user-table-row';
 
 export function UserView() {
   const table = useTable();
-  const [data, setData] = useState<UserProps[]>([]);
+  const [data, setData] = useState<any[]>([]);
   const [filterName, setFilterName] = useState('');
 
   const dataFiltered: UserProps[] = applyFilter({
