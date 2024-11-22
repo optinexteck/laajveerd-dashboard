@@ -7,7 +7,6 @@ import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -16,7 +15,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 type FormEvent = React.FormEvent<HTMLFormElement>;
 
 export default function RegisterView() {
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);

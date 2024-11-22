@@ -8,28 +8,27 @@ import LoadingButton from '@mui/lab/LoadingButton';
 
 import { firebaseController } from '../../utils/firebaseMiddleware'; // Adjust the path as necessary
 
-// Define the type for archive data
-
-// ----------------------------------------------------------------------
-
-export function MapForm() {
+export function ArchiveForm() {
   const [title, setTitle] = useState(''); // State for title
-  const [latitude, setLatitude] = useState(''); // State for latitude
-  const [longitude, setLongitude] = useState(''); // State for longitude
-  const [distance,setDistance]=useState('')
+  const [location, setLocation] = useState(''); // State for location
+  const [Year, setYear] = useState(''); // State for Year
+  const [supportedBy, setSupportedBy] = useState('');
+  const [team, setTeam] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+
   const [loading, setLoading] = useState(false); // Loading state
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!title || !latitude || !longitude) {
+    if (!title || !location || !Year || !imageUrl) {
       alert('Please fill in all fields');
       return;
     }
 
     setLoading(true); // Set loading state
     try {
-      const docData = { title, latitude, longitude,distance };
-      await firebaseController.addMapEntry(docData); // Use controller to add entry
+      const docData = { title, location, Year, supportedBy, team, imageUrl };
+      await firebaseController.addArchive1Entry(docData); // Use controller to add entry
       alert('Entry successfully added!');
       fetchArchiveData(); // Fetch data after adding
     } catch (error) {
@@ -45,7 +44,6 @@ export function MapForm() {
   useEffect(() => {
     fetchArchiveData(); // Fetch data on component mount
   }, []);
-
 
   const renderArchiveForm = (
     <Box
@@ -65,26 +63,42 @@ export function MapForm() {
       />
       <TextField
         fullWidth
-        name="latitude"
-        label="latitude"
-        value={latitude}
-        onChange={(e) => setLatitude(e.target.value)}
+        name="location"
+        label="location"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
         sx={{ mb: 3 }}
       />
       <TextField
         fullWidth
-        name="longitude"
-        label="longitude"
-        value={longitude}
-        onChange={(e) => setLongitude(e.target.value)}
+        name="Year"
+        label="Year"
+        value={Year}
+        onChange={(e) => setYear(e.target.value)}
         sx={{ mb: 3 }}
       />
       <TextField
         fullWidth
-        name="distance"
-        label="Distance"
-        value={distance}
-        onChange={(e) => setDistance(e.target.value)}
+        name="supportedBy"
+        label="Supported By"
+        value={supportedBy}
+        onChange={(e) => setSupportedBy(e.target.value)}
+        sx={{ mb: 3 }}
+      />
+      <TextField
+        fullWidth
+        name="team"
+        label="Set Team"
+        value={team}
+        onChange={(e) => setTeam(e.target.value)}
+        sx={{ mb: 3 }}
+      />
+      <TextField
+        fullWidth
+        name="image"
+        label="Enter Image Url"
+        value={team}
+        onChange={(e) => setImageUrl(e.target.value)}
         sx={{ mb: 3 }}
       />
       <LoadingButton
@@ -103,7 +117,7 @@ export function MapForm() {
   return (
     <>
       <Typography variant="h5" sx={{ mb: 3 }}>
-        Map Form
+        Archive Form
       </Typography>
       {renderArchiveForm}
     </>

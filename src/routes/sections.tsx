@@ -22,6 +22,7 @@ export const GlossaryForm = lazy(() => import('src/pages/glossaryForm'));
 export const GlossaryMain = lazy(() => import('src/pages/glossaryMain'));
 export const MapForm = lazy(() => import('src/pages/mapForm'));
 export const MapList = lazy(() => import('src/pages/map'));
+export const Archive = lazy(()=> import('src/pages/archive'))
 
 
 
@@ -68,8 +69,15 @@ export function Router() {
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'glossary-main', element: <GlossaryMain /> },
-        { path: 'archive1', element: <ArchiveForm /> },
         { path: 'map-list', element: <MapList /> },
+        {
+          path: 'archive1',
+          element: (
+            <AuthLayout>
+              <Archive />
+            </AuthLayout>
+          ),
+        },
         {
           path: 'archive',
           element: (

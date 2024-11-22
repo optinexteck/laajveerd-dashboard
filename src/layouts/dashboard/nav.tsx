@@ -13,12 +13,8 @@ import { RouterLink } from 'src/routes/components';
 
 import { varAlpha } from 'src/theme/styles';
 
-import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
 
-import { WorkspacesPopover } from '../components/workspaces-popover';
-
-import type { WorkspacesPopoverProps } from '../components/workspaces-popover';
 
 // ----------------------------------------------------------------------
 

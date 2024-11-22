@@ -27,6 +27,7 @@ export function GlossaryForm() {
       return;
     }
 
+    console.log(glossaryData)
     try {
       await firebaseController.addGlossaryEntry(title, description); // Use controller to add entry
       alert('Entry successfully added!');

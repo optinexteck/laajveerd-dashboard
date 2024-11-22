@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import { useTheme } from '@mui/material/styles';
 
-import { fNumber, fPercent, fShortenNumber } from 'src/utils/format-number';
+import { fNumber, fPercent } from 'src/utils/format-number';
 
 import { varAlpha, bgGradient } from 'src/theme/styles';
 

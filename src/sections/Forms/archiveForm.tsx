@@ -9,12 +9,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { firebaseController } from '../../utils/firebaseMiddleware'; // Adjust the path as necessary
 
 // Define the type for archive data
-interface ArchiveEntry {
-  title: string;
-  record: string;
-  imageUrl: string;
-  id: string; // Assuming you have an ID for each entry
-}
+
 
 // ----------------------------------------------------------------------
 

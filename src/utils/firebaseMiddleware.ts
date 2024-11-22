@@ -37,9 +37,9 @@ const addArchiveEntry = async (docData: { title: string; record: string; imageUr
   }
 };
 
-const fetchArchiveEntries = async () => {
+const fetchArchive1Entries = async () => {
   try {
-    const querySnapshot = await getDocs(collection(db, 'archive'));
+    const querySnapshot = await getDocs(collection(db, 'archive1'));
     return querySnapshot.docs.map((doc) => {
       const data = doc.data() as ArchiveDocument; // Cast to ArchiveDocument
       return { id: doc.id, ...data }; // Include document ID
@@ -50,6 +50,24 @@ const fetchArchiveEntries = async () => {
   }
 };
 
+// Middleware functions for archive
+const addArchive1Entry = async (docData: {
+  title: string;
+  location: string;
+  Year: number;
+  supportedBy: string;
+  imageUrl:string;
+  team: string;
+}) => {
+  try {
+    const docRef = await addDoc(collection(db, 'archive1'), docData);
+    console.log('Archive entry added with ID:', docRef.id);
+    return docRef.id; // Return the document ID
+  } catch (error) {
+    console.error('Error adding archive entry:', error);
+    throw new Error(error.message);
+  }
+};
 // Middleware functions for glossary
 const addGlossaryEntry = async (title: string, description: string) => {
   const docData = { title, description };
@@ -110,5 +128,9 @@ export const firebaseController = {
   getGlossaryEntries: async () => fetchGlossaryEntries(), // Fetch glossary entries
 
   addArchiveEntry: async (docData: { title: string; record: string; imageUrl: string }) => addArchiveEntry(docData), // Call the middleware function
-  getArchiveEntries: async () => fetchArchiveEntries(), // Fetch archive entries
+  getArchiveEntries: async () => fetchArchive1Entries(), // Fetch archive entries
+   
+  addArchive1Entry: async (docData: { title: string; location: string; Year: string,supportedBy:string,team:string,imageUrl:string }) => addArchive1Entry(docData), 
+  getArchive1Entries: async () => fetchArchive1Entries(),
+
 };
