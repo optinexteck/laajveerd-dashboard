@@ -15,8 +15,8 @@ export function ArchiveForm() {
   const [supportedBy, setSupportedBy] = useState('');
   const [team, setTeam] = useState('');
   const [imageUrl, setImageUrl] = useState('');
-
-  const [loading, setLoading] = useState(false); // Loading state
+  const [lead,setLead]=useState('');
+  const [loading, setLoading] = useState(false); 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,12 +25,12 @@ export function ArchiveForm() {
       return;
     }
 
-    setLoading(true); // Set loading state
+    setLoading(true); 
     try {
-      const docData = { title, location, Year, supportedBy, team, imageUrl };
-      await firebaseController.addArchive1Entry(docData); // Use controller to add entry
+      const docData = { title,location,Year,supportedBy,team,imageUrl,lead };
+      await firebaseController.addArchive1Entry(docData); 
       alert('Entry successfully added!');
-      fetchArchiveData(); // Fetch data after adding
+      fetchArchiveData(); 
     } catch (error) {
       console.error('Error adding entry:', error);
       alert(`Error adding entry: ${error.message}`);
@@ -87,6 +87,14 @@ export function ArchiveForm() {
       />
       <TextField
         fullWidth
+        name="projectlead"
+        label="Project Lead"
+        value={lead}
+        onChange={(e) => setLead(e.target.value)}
+        sx={{ mb: 3 }}
+      />
+      <TextField
+        fullWidth
         name="team"
         label="Set Team"
         value={team}
@@ -97,7 +105,7 @@ export function ArchiveForm() {
         fullWidth
         name="image"
         label="Enter Image Url"
-        value={team}
+        value={imageUrl}
         onChange={(e) => setImageUrl(e.target.value)}
         sx={{ mb: 3 }}
       />
