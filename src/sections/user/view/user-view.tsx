@@ -40,8 +40,6 @@ export function UserView() {
 
   const notFound = !dataFiltered.length && !!filterName;
 
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,7 +64,7 @@ export function UserView() {
           variant="contained"
           color="inherit"
           startIcon={<Iconify icon="mingcute:add-line" />}
-          href='/archive'
+          href="/archive"
         >
           New user
         </Button>
@@ -99,8 +97,13 @@ export function UserView() {
                 }
                 headLabel={[
                   { id: 'title', label: 'Title' },
-                  { id: 'category', label: 'Category' },
-                  { id: 'records', label: 'Records', align: 'center' },
+                  { id: 'Image url', label: 'imageUrl' },
+                  { id: 'Location', label: 'location', align: 'center' },
+                  { id: 'Year', label: 'Year', align: 'center' },
+                  { id: 'supportedBy', label: 'Supported by', align: 'center' },
+                  { id: 'team', label: 'Team', align: 'center' },
+                  { id: 'lead', label: 'Lead', align: 'center' },
+
                   { id: 'Options' },
                 ]}
               />

@@ -22,11 +22,8 @@ export const GlossaryForm = lazy(() => import('src/pages/glossaryForm'));
 export const GlossaryMain = lazy(() => import('src/pages/glossaryMain'));
 export const MapForm = lazy(() => import('src/pages/mapForm'));
 export const MapList = lazy(() => import('src/pages/map'));
-export const Archive = lazy(()=> import('src/pages/archive'))
+export const Archive = lazy(() => import('src/pages/archive'));
 export const ArchiveList = lazy(() => import('src/pages/archiveList'));
-
-
-
 
 // ----------------------------------------------------------------------
 

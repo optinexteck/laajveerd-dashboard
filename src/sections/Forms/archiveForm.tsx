@@ -10,7 +10,6 @@ import { firebaseController } from '../../utils/firebaseMiddleware'; // Adjust t
 
 // Define the type for archive data
 
-
 // ----------------------------------------------------------------------
 
 export function ArchiveForm() {
@@ -45,7 +44,6 @@ export function ArchiveForm() {
   useEffect(() => {
     fetchArchiveData(); // Fetch data on component mount
   }, []);
-
 
   const renderArchiveForm = (
     <Box

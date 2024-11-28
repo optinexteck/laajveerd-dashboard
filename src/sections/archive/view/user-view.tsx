@@ -40,8 +40,6 @@ export function UserView() {
 
   const notFound = !dataFiltered.length && !!filterName;
 
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -15,11 +15,11 @@ import { Iconify } from 'src/components/iconify';
 export type UserProps = {
   title: string;
   imageUrl: string;
-  location:string;
-  Year:string;
-  supportedBy:string;
+  location: string;
+  Year: string;
+  supportedBy: string;
   team: string;
-  lead:string
+  lead: string;
 };
 
 type UserTableRowProps = {
@@ -56,7 +56,7 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
         <TableCell>{row.location}</TableCell>
         <TableCell>{row.supportedBy}</TableCell>
         <TableCell>{row.lead}</TableCell>
-       <TableCell>{row.Year}</TableCell>
+        <TableCell>{row.Year}</TableCell>
         {/* 
         <TableCell>
           <Label color={(row.status === 'banned' && 'error') || 'success'}>

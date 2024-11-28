@@ -15,8 +15,8 @@ export function ArchiveForm() {
   const [supportedBy, setSupportedBy] = useState('');
   const [team, setTeam] = useState('');
   const [imageUrl, setImageUrl] = useState('');
-  const [lead,setLead]=useState('');
-  const [loading, setLoading] = useState(false); 
+  const [lead, setLead] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,12 +25,12 @@ export function ArchiveForm() {
       return;
     }
 
-    setLoading(true); 
+    setLoading(true);
     try {
-      const docData = { title,location,Year,supportedBy,team,imageUrl,lead };
-      await firebaseController.addArchive1Entry(docData); 
+      const docData = { title, location, Year: parseInt(Year,10), supportedBy, team, imageUrl, lead };
+      await firebaseController.addArchive1Entry(docData);
       alert('Entry successfully added!');
-      fetchArchiveData(); 
+      fetchArchiveData();
     } catch (error) {
       console.error('Error adding entry:', error);
       alert(`Error adding entry: ${error.message}`);

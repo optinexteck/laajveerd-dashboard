@@ -13,8 +13,8 @@ import { Iconify } from 'src/components/iconify';
 // ----------------------------------------------------------------------
 
 export type UserProps = {
-  id:string;
-  name:string;
+  id: string;
+  name: string;
   title: string;
   description: string;
 };
@@ -54,7 +54,7 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
         <TableCell>{row.description}</TableCell>
 
         {/* <TableCell align="center">{row.record}</TableCell> */}
-{/* 
+        {/* 
         <TableCell>
           <Label color={(row.status === 'banned' && 'error') || 'success'}>
             {row.status === 'approved' ? 'Approved' : 'Pending'}

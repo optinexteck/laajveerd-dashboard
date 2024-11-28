@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react';
-
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
@@ -7,32 +6,30 @@ import MenuList from '@mui/material/MenuList';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
-
 import { Iconify } from 'src/components/iconify';
-
-// ----------------------------------------------------------------------
+import { firebaseController } from '../../utils/firebaseMiddleware'; // Import the firebase controller
 
 export type UserProps = {
+  id: string;
   title: string;
   imageUrl: string;
   record: string;
-  name:string
+  location: string;
+  Year: number;
+  supportedBy: string;
+  team: string;
+  lead: string;
 };
 
 type UserTableRowProps = {
   row: UserProps;
   selected: boolean;
   onSelectRow: () => void;
+  refreshData: () => void; // Function to refresh data from the database
 };
 
-export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) {
+export function UserTableRow({ row, selected, onSelectRow, refreshData }: UserTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
-
-  // if (row.status === 'approved') {
-  //   console.log(row.status);
-  // } else {
-  //   row.status = 'error';
-  // }
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setOpenPopover(event.currentTarget);
@@ -42,27 +39,30 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
     setOpenPopover(null);
   }, []);
 
+  const handleDelete = async () => {
+    try {
+      await firebaseController.deleteArchive1Entry(row.id); // Delete from Firebase
+      refreshData(); // Refresh data after deletion
+    } catch (error) {
+      console.error('Error deleting entry:', error);
+    }
+    handleClosePopover(); // Close the popover after deletion
+  };
+
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
         <TableCell padding="checkbox">
           <Checkbox disableRipple checked={selected} onChange={onSelectRow} />
         </TableCell>
-
-
-
         <TableCell>{row.title}</TableCell>
-
         <TableCell>{row.imageUrl}</TableCell>
-
         <TableCell align="center">{row.record}</TableCell>
-{/* 
-        <TableCell>
-          <Label color={(row.status === 'banned' && 'error') || 'success'}>
-            {row.status === 'approved' ? 'Approved' : 'Pending'}
-          </Label>
-        </TableCell> */}
-
+        <TableCell>{row.location}</TableCell>
+        <TableCell>{row.Year}</TableCell>
+        <TableCell>{row.supportedBy}</TableCell>
+        <TableCell>{row.team}</TableCell>
+        <TableCell>{row.lead}</TableCell>
         <TableCell align="right">
           <IconButton onClick={handleOpenPopover}>
             <Iconify icon="eva:more-vertical-fill" />
@@ -98,7 +98,7 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
             Edit
           </MenuItem>
 
-          <MenuItem onClick={handleClosePopover} sx={{ color: 'error.main' }}>
+          <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
             <Iconify icon="solar:trash-bin-trash-bold" />
             Delete
           </MenuItem>

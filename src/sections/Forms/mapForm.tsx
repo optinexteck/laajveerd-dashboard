@@ -16,7 +16,7 @@ export function MapForm() {
   const [title, setTitle] = useState(''); // State for title
   const [latitude, setLatitude] = useState(''); // State for latitude
   const [longitude, setLongitude] = useState(''); // State for longitude
-  const [distance,setDistance]=useState('')
+  const [distance, setDistance] = useState('');
   const [loading, setLoading] = useState(false); // Loading state
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,7 +28,7 @@ export function MapForm() {
 
     setLoading(true); // Set loading state
     try {
-      const docData = { title, latitude, longitude,distance };
+      const docData = { title, latitude, longitude, distance };
       await firebaseController.addMapEntry(docData); // Use controller to add entry
       alert('Entry successfully added!');
       fetchArchiveData(); // Fetch data after adding
@@ -45,7 +45,6 @@ export function MapForm() {
   useEffect(() => {
     fetchArchiveData(); // Fetch data on component mount
   }, []);
-
 
   const renderArchiveForm = (
     <Box

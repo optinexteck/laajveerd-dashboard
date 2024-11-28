@@ -15,7 +15,6 @@ import { varAlpha } from 'src/theme/styles';
 
 import { Scrollbar } from 'src/components/scrollbar';
 
-
 // ----------------------------------------------------------------------
 
 export type NavContentProps = {
@@ -61,7 +60,7 @@ export function NavDesktop({
         ...sx,
       }}
     >
-      <NavContent data={data} slots={slots}/>
+      <NavContent data={data} slots={slots} />
     </Box>
   );
 }

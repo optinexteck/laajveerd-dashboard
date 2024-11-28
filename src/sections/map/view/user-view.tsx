@@ -28,15 +28,14 @@ import type { UserProps } from '../user-table-row';
 
 export function UserView() {
   const table = useTable();
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<UserProps[]>([]);
   const [filterName, setFilterName] = useState('');
 
   const dataFiltered: UserProps[] = applyFilter({
-    inputData: data, // Use the fetched data directly
+    inputData: data,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
   });
-  console.log(dataFiltered);
 
   const notFound = !dataFiltered.length && !!filterName;
 
@@ -45,7 +44,6 @@ export function UserView() {
       try {
         const entries = await firebaseController.fetchMapEntries(); // Fetch data from Firebase
         setData(entries); // Set the fetched data
-        console.log(entries);
       } catch (error) {
         console.error('Error fetching data from Firebase:', error);
       }
@@ -54,11 +52,13 @@ export function UserView() {
     fetchData(); // Call the fetch function
   }, []);
 
+
+
   return (
     <DashboardContent>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          map Data
+          Map Data
         </Typography>
         <Button
           variant="contained"
@@ -66,7 +66,7 @@ export function UserView() {
           startIcon={<Iconify icon="mingcute:add-line" />}
           href="/map"
         >
-          New user
+          New User
         </Button>
       </Box>
 
@@ -86,19 +86,21 @@ export function UserView() {
               <UserTableHead
                 order={table.order}
                 orderBy={table.orderBy}
-                rowCount={data.length} // Use the length of the fetched data
+                rowCount={data.length}
                 numSelected={table.selected.length}
                 onSort={table.onSort}
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    data.map((user) => user.title) // Use the fetched data
+                    data.map((user) => user.title)
                   )
                 }
                 headLabel={[
-                  { id: 'title', label: 'Title' },
-                  { id: 'description', label: 'desciprtion' },
-                  { id: 'Options' },
+                  { id: 'country', label: 'Counry' },
+                  { id: 'longitude', label: 'Longitude' },
+                  { id: 'longitude', label: 'Longitude' },
+                  { id: 'distance', label: 'Distance' },
+                  { id: 'Options',label:"options" },
                 ]}
               />
               <TableBody>
@@ -109,16 +111,16 @@ export function UserView() {
                   )
                   .map((row) => (
                     <UserTableRow
-                      key={row.title} // Ensure you have a unique key
+                      key={row.id} // Ensure you have a unique key
                       row={row}
-                      selected={table.selected.includes(row.title)} // Use row.imageUrl for selection
-                      onSelectRow={() => table.onSelectRow(row.title)} // Use row.imageUrl for selection
+                      selected={table.selected.includes(row.title)}
+                      onSelectRow={() => table.onSelectRow(row.title)}
                     />
                   ))}
 
                 <TableEmptyRows
                   height={68}
-                  emptyRows={emptyRows(table.page, table.rowsPerPage, data.length)} // Use the length of the fetched data
+                  emptyRows={emptyRows(table.page, table.rowsPerPage, data.length)}
                 />
 
                 {notFound && <TableNoData searchQuery={filterName} />}
@@ -130,7 +132,7 @@ export function UserView() {
         <TablePagination
           component="div"
           page={table.page}
-          count={data.length} // Use the length of the fetched data
+          count={data.length}
           rowsPerPage={table.rowsPerPage}
           onPageChange={table.onChangePage}
           rowsPerPageOptions={[5, 10, 25]}

@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { addDoc, getDocs, collection, getFirestore } from 'firebase/firestore';
+import { addDoc, getDocs, collection, getFirestore, deleteDoc, doc } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -50,24 +50,25 @@ const fetchArchive1Entries = async () => {
   }
 };
 
-// Middleware functions for archive
+// Middleware functions for archive1
 const addArchive1Entry = async (docData: {
   title: string;
   location: string;
   Year: number;
   supportedBy: string;
-  imageUrl:string;
+  imageUrl: string;
   team: string;
 }) => {
   try {
     const docRef = await addDoc(collection(db, 'archive1'), docData);
-    console.log('Archive entry added with ID:', docRef.id);
+    console.log('Archive1 entry added with ID:', docRef.id);
     return docRef.id; // Return the document ID
   } catch (error) {
-    console.error('Error adding archive entry:', error);
+    console.error('Error adding archive1 entry:', error);
     throw new Error(error.message);
   }
 };
+
 // Middleware functions for glossary
 const addGlossaryEntry = async (title: string, description: string) => {
   const docData = { title, description };
@@ -119,18 +120,77 @@ const fetchMapEntries = async () => {
   }
 };
 
+// Delete functions for all collections
+const deleteArchiveEntry = async (id: string) => {
+  try {
+    await deleteDoc(doc(db, 'archive', id)); // Delete document by ID
+    console.log('Archive entry deleted with ID:', id);
+  } catch (error) {
+    console.error('Error deleting archive entry:', error);
+    throw new Error(error.message);
+  }
+};
+
+const deleteArchive1Entry = async (id: string) => {
+  try {
+    await deleteDoc(doc(db, 'archive1', id)); // Delete document by ID
+    console.log('Archive entry deleted with ID:', id);
+  } catch (error) {
+    console.error('Error deleting archive entry:', error);
+    throw new Error(error.message);
+  }
+};
+
+const deleteGlossaryEntry = async (id: string) => {
+  try {
+    await deleteDoc(doc(db, 'archives', id)); // Delete document by ID
+    console.log('Glossary entry deleted with ID:', id);
+  } catch (error) {
+    console.error('Error deleting glossary entry:', error);
+    throw new Error(error.message);
+  }
+};
+
+const deleteMapEntry = async (id: string) => {
+  try {
+    await deleteDoc(doc(db, 'map', id)); // Delete document by ID
+    console.log('Map entry deleted with ID:', id);
+  } catch (error) {
+    console.error('Error deleting map entry:', error);
+    throw new Error(error.message);
+  }
+};
+
 // Controller functions
 export const firebaseController = {
-  addMapEntry: async (docData: { title: string; latitude: string; longitude: string; distance: string }) => addMapEntry(docData), // Call the middleware function
+  addMapEntry: async (docData: {
+    title: string;
+    latitude: string;
+    longitude: string;
+    distance: string;
+  }) => addMapEntry(docData), // Call the middleware function
   fetchMapEntries: async () => fetchMapEntries(), // Fetch map entries
+  deleteMapEntry: async (id: string) => deleteMapEntry(id), // Delete map entry
 
-  addGlossaryEntry: async (title: string, description: string) => addGlossaryEntry(title, description), // Call the middleware function
+  addGlossaryEntry: async (title: string, description: string) =>
+    addGlossaryEntry(title, description), // Call the middleware function
   getGlossaryEntries: async () => fetchGlossaryEntries(), // Fetch glossary entries
+  deleteGlossaryEntry: async (id: string) => deleteGlossaryEntry(id), // Delete glossary entry
 
-  addArchiveEntry: async (docData: { title: string; record: string; imageUrl: string }) => addArchiveEntry(docData), // Call the middleware function
+  addArchiveEntry: async (docData: { title: string; record: string; imageUrl: string }) =>
+    addArchiveEntry(docData), // Call the middleware function
   getArchiveEntries: async () => fetchArchive1Entries(), // Fetch archive entries
-   
-  addArchive1Entry: async (docData: { title: string; location: string; Year: string,supportedBy:string,team:string,imageUrl:string }) => addArchive1Entry(docData), 
-  getArchive1Entries: async () => fetchArchive1Entries(),
+  deleteArchiveEntry: async (id: string) => deleteArchiveEntry(id), // Delete archive entry
+  deleteArchive1Entry: async (id: string) => deleteArchive1Entry(id), // Delete archive entry
 
+  addArchive1Entry: async (docData: {
+    title: string;
+    location: string;
+    Year: number;
+    supportedBy: string;
+    team: string;
+    imageUrl: string;
+    lead: string;
+  }) => addArchive1Entry(docData),
+  getArchive1Entries: async () => fetchArchive1Entries(), // Fetch archive1 entries
 };
