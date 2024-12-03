@@ -28,7 +28,7 @@ import type { UserProps } from '../user-table-row';
 
 export function UserView() {
   const table = useTable();
-  const [data, setData] = useState<UserProps[]>([]);
+  const [data, setData] = useState<any[]>([]);
   const [filterName, setFilterName] = useState('');
 
   const dataFiltered: UserProps[] = applyFilter({
@@ -111,7 +111,7 @@ export function UserView() {
                   )
                   .map((row) => (
                     <UserTableRow
-                      key={row.id} // Ensure you have a unique key
+                      key={row.title} // Ensure you have a unique key
                       row={row}
                       selected={table.selected.includes(row.title)}
                       onSelectRow={() => table.onSelectRow(row.title)}

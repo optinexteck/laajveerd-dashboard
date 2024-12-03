@@ -10,9 +10,12 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
 import { Iconify } from 'src/components/iconify';
 
+import { firebaseController } from '../../utils/firebaseMiddleware';
+
 // ----------------------------------------------------------------------
 
 export type UserProps = {
+  id: string;
   title: string;
   longitude: string;
   latitude: string;
@@ -35,15 +38,14 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
   //   row.status = 'error';
   // }
 
-   const handleDelete = async () => {
-     try {
-       await firebaseController.deleteMapEntry(row.id); // Delete from Firebase
-       refreshData(); // Refresh data after deletion
-     } catch (error) {
-       console.error('Error deleting entry:', error);
-     }
-     handleClosePopover(); // Close the popover after deletion
-   };
+  const handleDelete = async () => {
+    try {
+      await firebaseController.deleteMapEntry(row.id); // Delete from Firebase
+    } catch (error) {
+      console.error('Error deleting entry:', error);
+    }
+    handleClosePopover(); // Close the popover after deletion
+  };
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setOpenPopover(event.currentTarget);
   }, []);
@@ -109,7 +111,7 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
           </MenuItem>
 
           <MenuItem onClick={handleClosePopover} sx={{ color: 'error.main' }}>
-            <Iconify icon="solar:trash-bin-trash-bold" onClick={handleDelete}/>
+            <Iconify icon="solar:trash-bin-trash-bold" onClick={handleDelete} />
             Delete
           </MenuItem>
         </MenuList>

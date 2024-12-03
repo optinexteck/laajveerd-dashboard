@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
@@ -6,7 +7,9 @@ import MenuList from '@mui/material/MenuList';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
+
 import { Iconify } from 'src/components/iconify';
+
 import { firebaseController } from '../../utils/firebaseMiddleware'; // Import the firebase controller
 
 export type UserProps = {
@@ -25,10 +28,9 @@ type UserTableRowProps = {
   row: UserProps;
   selected: boolean;
   onSelectRow: () => void;
-  refreshData: () => void; // Function to refresh data from the database
 };
 
-export function UserTableRow({ row, selected, onSelectRow, refreshData }: UserTableRowProps) {
+export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
@@ -42,7 +44,6 @@ export function UserTableRow({ row, selected, onSelectRow, refreshData }: UserTa
   const handleDelete = async () => {
     try {
       await firebaseController.deleteArchive1Entry(row.id); // Delete from Firebase
-      refreshData(); // Refresh data after deletion
     } catch (error) {
       console.error('Error deleting entry:', error);
     }

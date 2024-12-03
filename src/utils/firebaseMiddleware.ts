@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { addDoc, getDocs, collection, getFirestore, deleteDoc, doc } from 'firebase/firestore';
+import { doc, addDoc, getDocs, deleteDoc, collection, getFirestore } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -40,9 +40,9 @@ const addArchiveEntry = async (docData: { title: string; record: string; imageUr
 const fetchArchive1Entries = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, 'archive1'));
-    return querySnapshot.docs.map((doc) => {
-      const data = doc.data() as ArchiveDocument; // Cast to ArchiveDocument
-      return { id: doc.id, ...data }; // Include document ID
+    return querySnapshot.docs.map((docData) => {
+      const data = docData.data() as ArchiveDocument; // Cast to ArchiveDocument
+      return { id: docData.id, ...data }; // Include document ID
     });
   } catch (error) {
     console.error('Error fetching archive data:', error);
@@ -85,9 +85,9 @@ const addGlossaryEntry = async (title: string, description: string) => {
 const fetchGlossaryEntries = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, 'archives')); // Use 'glossary' collection
-    return querySnapshot.docs.map((doc) => {
-      const data = doc.data() as ArchiveDocument; // Cast to ArchiveDocument
-      return { id: doc.id, ...data }; // Include document ID
+    return querySnapshot.docs.map((docData) => {
+      const data = docData.data() as ArchiveDocument; // Cast to ArchiveDocument
+      return { id: docData.id, ...data }; // Include document ID
     });
   } catch (error) {
     console.error('Error fetching glossary data:', error);
@@ -110,9 +110,9 @@ const addMapEntry = async (docData: { title: string; latitude: string; longitude
 const fetchMapEntries = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, 'map')); // Use 'map' collection
-    return querySnapshot.docs.map((doc) => {
-      const data = doc.data(); // Cast to appropriate type if needed
-      return { id: doc.id, ...data }; // Include document ID
+    return querySnapshot.docs.map((docData) => {
+      const data = docData.data(); // Cast to appropriate type if needed
+      return { id: docData.id, ...data }; // Include document ID
     });
   } catch (error) {
     console.error('Error fetching map data:', error);
