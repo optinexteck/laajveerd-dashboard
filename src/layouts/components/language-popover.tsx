@@ -45,7 +45,7 @@ export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProp
     <Box
       component="img"
       alt={label}
-      src={icon}
+      src="/lg.png"
       sx={{ width: 26, height: 20, borderRadius: 0.5, objectFit: 'cover' }}
     />
   );
