@@ -32,7 +32,7 @@ export function UserView() {
   const [filterName, setFilterName] = useState('');
 
   const dataFiltered: UserProps[] = applyFilter({
-    inputData: data, // Use the fetched data directly
+    inputData: data,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
   });
@@ -43,15 +43,15 @@ export function UserView() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const entries = await firebaseController.getArchive1Entries(); // Fetch data from Firebase
-        setData(entries); // Set the fetched data
+        const entries = await firebaseController.getArchive1Entries();
+        setData(entries);
         console.log(entries);
       } catch (error) {
         console.error('Error fetching data from Firebase:', error);
       }
     };
 
-    fetchData(); // Call the fetch function
+    fetchData();
   }, []);
 
   return (
@@ -86,18 +86,18 @@ export function UserView() {
               <UserTableHead
                 order={table.order}
                 orderBy={table.orderBy}
-                rowCount={data.length} // Use the length of the fetched data
+                rowCount={data.length}
                 numSelected={table.selected.length}
                 onSort={table.onSort}
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    data.map((user) => user.id) // Use the fetched data
+                    data.map((user) => user.id)
                   )
                 }
                 headLabel={[
                   { id: 'title', label: 'Title' },
-                  { id: 'imageUrl', label: 'Image Url' },
+                  { id: 'lead', label: 'Project Lead' },
                   { id: 'location', label: 'Location', align: 'center' },
                   { id: 'supportedBy', label: 'Supported By' },
                   { id: 'year', label: 'Year' },

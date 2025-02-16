@@ -52,10 +52,9 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
           <Checkbox disableRipple checked={selected} onChange={onSelectRow} />
         </TableCell>
         <TableCell>{row.title}</TableCell>
-        <TableCell>{row.imageUrl}</TableCell>
+        <TableCell>{row.lead}</TableCell>
         <TableCell>{row.location}</TableCell>
         <TableCell>{row.supportedBy}</TableCell>
-        <TableCell>{row.lead}</TableCell>
         <TableCell>{row.Year}</TableCell>
         {/* 
         <TableCell>

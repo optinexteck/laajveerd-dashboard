@@ -98,12 +98,7 @@ export function UserView() {
                 headLabel={[
                   { id: 'title', label: 'Title' },
                   { id: 'Image url', label: 'imageUrl' },
-                  { id: 'Location', label: 'location', align: 'center' },
-                  { id: 'Year', label: 'Year', align: 'center' },
-                  { id: 'supportedBy', label: 'Supported by', align: 'center' },
-                  { id: 'team', label: 'Team', align: 'center' },
-                  { id: 'lead', label: 'Lead', align: 'center' },
-
+                  { id: 'record', label: 'record', align: 'center' },
                   { id: 'Options' },
                 ]}
               />

@@ -58,12 +58,8 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
         </TableCell>
         <TableCell>{row.title}</TableCell>
         <TableCell>{row.imageUrl}</TableCell>
-        <TableCell align="center">{row.record}</TableCell>
-        <TableCell>{row.location}</TableCell>
-        <TableCell>{row.Year}</TableCell>
-        <TableCell>{row.supportedBy}</TableCell>
-        <TableCell>{row.team}</TableCell>
-        <TableCell>{row.lead}</TableCell>
+        <TableCell align="center">{row.record || `0`}</TableCell>
+
         <TableCell align="right">
           <IconButton onClick={handleOpenPopover}>
             <Iconify icon="eva:more-vertical-fill" />
